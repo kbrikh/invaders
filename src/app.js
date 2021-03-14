@@ -1,11 +1,16 @@
 'use strict'
 
+let width = 15;
+
 const grid = document.querySelector('.grid');
 const result = document.querySelector('.result');
-let width = 15;
+const score = document.querySelector('.score');
+
+let scoreValue = 0;
 let invaderId;
 let direction = 1;
 let goingRight = true;
+let speedInvaders = 500;
 
 for (let i = 0; i < 225; i++) {
     let square = document.createElement('div');
@@ -113,13 +118,13 @@ function moveInvaders() {
     }
 }
 
-invaderId = setInterval(moveInvaders, 300);
+invaderId = setInterval(moveInvaders, speedInvaders);
+
+
 
 let fireHandler = document.addEventListener('keyup', shoot);
-
 function shoot(e) {
     if (e.key === 'ArrowUp') {
-        console.log('fire');
         let fireIndex = currentShooterIndex;
 
         let fireInterval = setInterval(() => {
@@ -133,13 +138,14 @@ function shoot(e) {
 
             squares[fireIndex].classList.add('fire');
 
+
             if (squares[fireIndex].classList.contains('invaders', 'fire')) {
                 squares[fireIndex].classList.remove('fire');
                 squares[fireIndex].classList.remove('invaders');
-
                 invaders.splice(invaders.indexOf(fireIndex), 1)
-                console.log(invaders);
                 clearInterval(fireInterval)
+                scoreValue += 1;
+                score.innerHTML = scoreValue;
             }
         }, 100)
 
