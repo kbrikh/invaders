@@ -1,0 +1,24 @@
+{
+    "name": "invaders",
+    "version": "1.0.0",
+    "description": "Invaders game",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "node_modules/.bin/eslint"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kbrikh/invaders.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/kbrikh/invaders/issues"
+    },
+    "homepage": "https://github.com/kbrikh/invaders#readme",
+    "devDependencies": {
+        "eslint": "^7.22.0"
+    }
+}
