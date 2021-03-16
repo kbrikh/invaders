@@ -1,13 +1,13 @@
 export class Invaders {
 
     constructor(map) {
-        this.result = document.querySelector('.result');
         this.map = map;
         this.direction = 1;
         this.goingRight = true;
         this.width = 15;
-        this.invaderId;
+        this.invaderId = null;
         this.speedInvaders = 100;
+        this.event = new CustomEvent('over');
 
         this.invaders = [
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
@@ -19,14 +19,12 @@ export class Invaders {
     draw() {
         for (let i = 0; i < this.invaders.length; i++) {
             this.map[this.invaders[i]].classList.add('invaders');
-
         }
     }
 
     remove() {
         for (let i = 0; i < this.invaders.length; i++) {
             this.map[this.invaders[i]].classList.remove('invaders');
-
         }
     }
 
@@ -42,36 +40,34 @@ export class Invaders {
 
         if (rightEdge && this.goingRight) {
             for (let i = 0; i < this.invaders.length; i++) {
-                this.invaders[i] += this.width + 1
+                this.invaders[i] += this.width + 1;
             }
-            this.direction = -1
-            this.goingRight = false
+            this.direction = -1;
+            this.goingRight = false;
         }
 
         if (leftEdge && !this.goingRight) {
             for (let i = 0; i < this.invaders.length; i++) {
-                this.invaders[i] += this.width - 1
+                this.invaders[i] += this.width - 1;
             }
-            this.direction = 1
-            this.goingRight = true
+            this.direction = 1;
+            this.goingRight = true;
         }
 
         for (let i = 0; i < this.invaders.length; i++) {
-            this.invaders[i] += this.direction
+            this.invaders[i] += this.direction;
         }
 
         this.draw();
 
         if (this.map[shooterIndex].classList.contains('invaders', 'shooter')) {
             clearInterval(this.invaderId);
-            this.result.innerHTML = 'Game Over !';
-
+            document.dispatchEvent(this.event);
         }
 
-        if (this.invaders[this.invaders.length] > 225) {
+        if (this.invaders[this.invaders.length - 1] >= 224) {
             clearInterval(this.invaderId);
-            this.result.innerHTML = 'Game Over !';
-
+            document.dispatchEvent(this.event);
         }
     }
 

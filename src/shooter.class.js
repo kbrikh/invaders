@@ -1,6 +1,5 @@
 export class Shooter {
     constructor(map, invaders) {
-        this.score = document.querySelector('.score');
         this.scoreValue = 0;
         this.shooterIndex = 202;
         this.width = 15;
@@ -15,6 +14,7 @@ export class Shooter {
 
     moveHandler(e) {
         this.map[this.shooterIndex].classList.remove('shooter');
+
         switch (e.key) {
             case 'ArrowLeft':
                 if (this.shooterIndex % this.width !== 0) {
@@ -36,6 +36,8 @@ export class Shooter {
     }
 
     shoot(e) {
+        let scoreEvent = new CustomEvent('score', { detail: this.scoreValue + 1 });
+
         if (e.key === 'ArrowUp') {
             let fireIndex = this.shooterIndex;
 
@@ -50,17 +52,19 @@ export class Shooter {
 
                 this.map[fireIndex].classList.add('fire');
 
-
                 if (this.map[fireIndex].classList.contains('invaders', 'fire')) {
                     this.map[fireIndex].classList.remove('fire');
                     this.map[fireIndex].classList.remove('invaders');
-                    this.invaders.invaders.splice(this.invaders.invaders.indexOf(fireIndex), 1)
-                    clearInterval(fireInterval)
-                    this.scoreValue += 1;
-                    this.score.innerHTML = this.scoreValue;
-                }
-            }, 100)
 
+                    this.invaders.invaders.splice(this.invaders.invaders.indexOf(fireIndex), 1);
+
+                    clearInterval(fireInterval);
+
+                    this.scoreValue += 1;
+
+                    document.dispatchEvent(scoreEvent);
+                }
+            }, 100);
         }
     }
 
@@ -68,5 +72,4 @@ export class Shooter {
         document.removeEventListener('keydown', this.moveHandler);
         document.removeEventListener('keyup', this.shoot);
     }
-
 }
