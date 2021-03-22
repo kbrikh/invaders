@@ -1,4 +1,4 @@
-export class Field {
+export class Scene {
     constructor(width, height) {
         this.grid = document.querySelector('.grid');
         this.result = document.querySelector('.result');
@@ -25,6 +25,16 @@ export class Field {
         }
     }
 
+    register(actor) {
+        this.actors.push(actor);
+    }
 
+    unregister(actor) {
+        let idx = this.actors.indexOf(actor);
+
+        if (idx !== -1) {
+            this.actors.splice(idx, 1);
+        }
+    }
 
 }
